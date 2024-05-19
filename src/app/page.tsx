@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import { GlobalStyles } from '@ui/theme/GlobalStyles'
-import { todoController } from '@ui/controller/todos'
+import { todoController } from '@ui/controller/todo'
 
 const bg = '/bg.jpeg' // inside public folder
 
@@ -12,12 +12,13 @@ interface HomeTodo {
 
 function Home() {
   const [todos, setTodos] = useState<HomeTodo[]>([])
+  const [page, setPage] = useState(1)
 
   useEffect(() => {
-    todoController.get().then((todos) => {
+    todoController.get({ page }).then(({ todos }) => {
       setTodos(todos)
     })
-  }, [])
+  }, [page])
   return (
     <main>
       <GlobalStyles themeName="coolGrey" />
@@ -84,8 +85,8 @@ function Home() {
 
             <tr>
               <td colSpan={4} align="center" style={{ textAlign: 'center' }}>
-                <button data-type="load-more">
-                  Carregar mais{' '}
+                <button data-type="load-more" onClick={() => setPage(page + 1)}>
+                  Página {page}, Carregar mais{' '}
                   <span
                     style={{
                       display: 'inline-block',
