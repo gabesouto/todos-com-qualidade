@@ -1,8 +1,7 @@
+import { todoRepository } from '@api/repository/todo'
 import { NextResponse } from 'next/server'
-// import db from '@server/db.json'
-import { read } from '@core/crud'
 
 export async function GET() {
-  const todos = read()
-  return NextResponse.json(todos, { status: 200 })
+  const output = todoRepository.get()
+  return NextResponse.json(output.todos, { status: 200 })
 }

@@ -15,16 +15,29 @@ interface TodoRepositoryGetOutput {
   total: number
   pages: number
 }
+async function fetchTodos() {
+  try {
+    const response = await fetch('/api/todos')
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    const todosFromServer = await response.json()
+
+    return todosFromServer
+  } catch (error) {
+    console.error('Failed to fetch todos:', error)
+    return []
+  }
+}
 
 async function get({
   page,
   limit,
 }: TodoRepositoryGetParams): Promise<TodoRepositoryGetOutput> {
-  const response = await fetch('/api/todos')
-  const todosFromServer = await response.json()
+  const todosFromServer = await fetchTodos()
 
-  console.log('page', page)
-  console.log('limit', limit)
   const ALL_TODOS = todosFromServer
   const startIndex = (page - 1) * limit
   const endIndex = page * limit
