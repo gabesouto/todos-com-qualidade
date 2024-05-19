@@ -6,8 +6,8 @@ interface Todo {
 }
 
 interface TodoRepositoryGetParams {
-  page: number
-  limit: number
+  page?: number
+  limit?: number
 }
 
 interface TodoRepositoryGetOutput {
@@ -15,9 +15,9 @@ interface TodoRepositoryGetOutput {
   total: number
   pages: number
 }
-async function fetchTodos() {
+async function fetchTodos({ page, limit }: TodoRepositoryGetParams) {
   try {
-    const response = await fetch('/api/todos')
+    const response = await fetch(`/api/todos?page=${page}&limit=${limit}`)
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`)
@@ -36,18 +36,12 @@ async function get({
   page,
   limit,
 }: TodoRepositoryGetParams): Promise<TodoRepositoryGetOutput> {
-  const todosFromServer = await fetchTodos()
-
-  const ALL_TODOS = todosFromServer
-  const startIndex = (page - 1) * limit
-  const endIndex = page * limit
-  const paginatedTodos = ALL_TODOS.slice(startIndex, endIndex)
-  const totalPages = Math.ceil(ALL_TODOS.length / limit)
+  const response = await fetchTodos({ page, limit })
 
   return {
-    todos: paginatedTodos,
-    total: ALL_TODOS.length,
-    pages: totalPages,
+    todos: response.todos,
+    total: response.total,
+    pages: response.pages,
   }
 }
 
