@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { GlobalStyles } from '@ui/theme/GlobalStyles'
 import { todoController } from '@ui/controller/todo'
 
@@ -11,35 +11,36 @@ interface HomeTodo {
 }
 
 function Home() {
-  const [initialLoadComplete, setInitialLoadComplete] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [todos, setTodos] = useState<HomeTodo[]>([])
   const [totalPages, setTotalPages] = useState(0)
   const [page, setPage] = useState(1)
   const [search, setSearch] = useState('')
 
+  const initialLoadComplete = useRef(false)
+
   const homeTodos = todoController.filterTodosByContent<HomeTodo>(todos, search)
   const hasMorePages = totalPages > page
   const hasNoTodos = homeTodos.length === 0 && !isLoading
 
   useEffect(() => {
-    if (!initialLoadComplete) {
+    if (!initialLoadComplete.current) {
       todoController
         .get({ page })
         .then(({ todos, pages }) => {
           setTodos(todos)
           setTotalPages(pages)
-          setInitialLoadComplete(true)
         })
         .finally(() => {
           setIsLoading(false)
+          initialLoadComplete.current = true
         })
     }
   }, [initialLoadComplete, page])
 
   return (
     <main>
-      <GlobalStyles themeName="coolGrey" />
+      <GlobalStyles themeName="indigo" />
       <header
         style={{
           backgroundImage: `url('${bg}')`,
@@ -64,7 +65,6 @@ function Home() {
             placeholder="Filtrar lista atual, ex: Dentista"
             onChange={(event) => {
               setSearch(event.target.value)
-              console.log(hasNoTodos)
             }}
           />
         </form>
