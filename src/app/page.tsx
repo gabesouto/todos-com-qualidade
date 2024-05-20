@@ -11,20 +11,32 @@ interface HomeTodo {
 }
 
 function Home() {
+  const [initialLoadComplete, setInitialLoadComplete] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [todos, setTodos] = useState<HomeTodo[]>([])
   const [totalPages, setTotalPages] = useState(0)
   const [page, setPage] = useState(1)
+  const [search, setSearch] = useState('')
 
-  console.log('tota pages', totalPages)
+  const homeTodos = todoController.filterTodosByContent<HomeTodo>(todos, search)
   const hasMorePages = totalPages > page
+  const hasNoTodos = homeTodos.length === 0 && !isLoading
+
   useEffect(() => {
-    todoController.get({ page }).then(({ todos, pages }) => {
-      setTodos((oldTodos) => {
-        return [...oldTodos, ...todos]
-      })
-      setTotalPages(pages)
-    })
-  }, [page])
+    if (!initialLoadComplete) {
+      todoController
+        .get({ page })
+        .then(({ todos, pages }) => {
+          setTodos(todos)
+          setTotalPages(pages)
+          setInitialLoadComplete(true)
+        })
+        .finally(() => {
+          setIsLoading(false)
+        })
+    }
+  }, [initialLoadComplete, page])
+
   return (
     <main>
       <GlobalStyles themeName="coolGrey" />
@@ -45,8 +57,16 @@ function Home() {
       </header>
 
       <section>
-        <form>
-          <input type="text" placeholder="Filtrar lista atual, ex: Dentista" />
+        <form className="text-black">
+          <input
+            type="text"
+            value={search}
+            placeholder="Filtrar lista atual, ex: Dentista"
+            onChange={(event) => {
+              setSearch(event.target.value)
+              console.log(hasNoTodos)
+            }}
+          />
         </form>
 
         <table border={1}>
@@ -62,7 +82,7 @@ function Home() {
           </thead>
 
           <tbody>
-            {todos.map((todo) => {
+            {homeTodos.map((todo) => {
               return (
                 <tr key={todo.id} className="text-black">
                   <td>
@@ -77,23 +97,44 @@ function Home() {
               )
             })}
 
-            {/* <tr>
-              <td colSpan={4} align="center" style={{ textAlign: 'center' }}>
-                Carregando...
-              </td>
-            </tr> */}
-            {/* 
-            <tr>
-              <td colSpan={4} align="center">
-                Nenhum item encontrado
-              </td>
-            </tr> */}
+            {isLoading && (
+              <tr>
+                <td colSpan={4} align="center" style={{ textAlign: 'center' }}>
+                  Carregando...
+                </td>
+              </tr>
+            )}
+
+            {hasNoTodos && (
+              <tr>
+                <td colSpan={4} align="center" className="text-black">
+                  Nenhum item encontrado
+                </td>
+              </tr>
+            )}
+
             {hasMorePages && (
               <tr>
                 <td colSpan={4} align="center" style={{ textAlign: 'center' }}>
                   <button
                     data-type="load-more"
-                    onClick={() => setPage(page + 1)}
+                    onClick={() => {
+                      const nextPage = page + 1
+                      setIsLoading(true)
+                      setPage(nextPage)
+
+                      todoController
+                        .get({ page: nextPage })
+                        .then(({ todos, pages }) => {
+                          setTodos((oldTodos) => {
+                            return [...oldTodos, ...todos]
+                          })
+                          setTotalPages(pages)
+                        })
+                        .finally(() => {
+                          setIsLoading(false)
+                        })
+                    }}
                   >
                     Página {page}, Carregar mais{' '}
                     <span
