@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
 
     if (!body.success) {
       return NextResponse.json(
-        { error: { message: 'content object  is missing' } },
+        { error: { message: body.error.errors } },
         { status: 400 },
       )
     }
