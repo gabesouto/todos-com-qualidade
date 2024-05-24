@@ -13,6 +13,7 @@ interface HomeTodo {
 function Home() {
   const [isLoading, setIsLoading] = useState(true)
   const [todos, setTodos] = useState<HomeTodo[]>([])
+  const [newTodoContent, setNewTodoContent] = useState('')
   const [totalPages, setTotalPages] = useState(0)
   const [page, setPage] = useState(1)
   const [search, setSearch] = useState('')
@@ -49,8 +50,32 @@ function Home() {
         <div className="typewriter">
           <h1>O que fazer hoje?</h1>
         </div>
-        <form>
-          <input type="text" placeholder="Correr, Estudar..." />
+        <form
+          onSubmit={(event) => {
+            event.preventDefault()
+            todoController.create({
+              content: newTodoContent,
+              onError() {
+                alert('Content is needed to create a todo')
+              },
+              onSuccess(todo: HomeTodo) {
+                setTodos((oldTodos) => {
+                  return [todo, ...oldTodos]
+                })
+                setNewTodoContent('')
+              },
+            })
+          }}
+        >
+          <input
+            type="text"
+            className="text-black"
+            placeholder="Correr, Estudar..."
+            value={newTodoContent}
+            onChange={function newTodoHandler(event) {
+              setNewTodoContent(event.target.value)
+            }}
+          />
           <button type="submit" aria-label="Adicionar novo item">
             +
           </button>

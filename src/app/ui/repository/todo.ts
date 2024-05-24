@@ -1,9 +1,11 @@
-interface Todo {
-  id: string
-  content: string
-  date: Date
-  done: boolean
-}
+// interface Todo {
+//   id: string
+//   content: string
+//   date: Date
+//   done: boolean
+// }
+
+import { Todo } from '@ui/schema/todo'
 
 interface TodoRepositoryGetParams {
   page?: number
