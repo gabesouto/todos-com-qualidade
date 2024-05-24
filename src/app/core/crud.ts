@@ -2,8 +2,7 @@
 import fs from 'fs' // ES6
 import { v4 as uuid } from 'uuid'
 // const fs = require("fs"); - CommonJS
-const DB_FILE_PATH =
-  '/home/gabriel/crud-com-qualidade/todos-com-qualidade/src/app/core/db.json'
+const DB_FILE_PATH = 'src/app/core/db.json'
 
 // console.log("[CRUD]");
 
