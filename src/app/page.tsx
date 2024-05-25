@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { GlobalStyles } from '@ui/theme/GlobalStyles'
 import { todoController } from '@ui/controller/todo'
+import { SnackbarProvider, enqueueSnackbar } from 'notistack'
 
 const bg = '/bg.jpeg' // inside public folder
 
@@ -42,6 +43,7 @@ function Home() {
   return (
     <main>
       <GlobalStyles themeName="indigo" />
+      <SnackbarProvider />
       <header
         style={{
           backgroundImage: `url('${bg}')`,
@@ -50,19 +52,25 @@ function Home() {
         <div className="typewriter">
           <h1>O que fazer hoje?</h1>
         </div>
+
         <form
           onSubmit={(event) => {
             event.preventDefault()
             todoController.create({
               content: newTodoContent,
               onError() {
-                alert('Content is needed to create a todo')
+                enqueueSnackbar('Failed to create TODO', {
+                  variant: 'error',
+                })
               },
               onSuccess(todo: HomeTodo) {
                 setTodos((oldTodos) => {
                   return [todo, ...oldTodos]
                 })
                 setNewTodoContent('')
+                enqueueSnackbar('TODO succesfully created!', {
+                  variant: 'success',
+                })
               },
             })
           }}
