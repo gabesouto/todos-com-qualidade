@@ -38,15 +38,22 @@ function create({ content, onError, onSuccess }: todoControllerCreateParams) {
     onError()
     return
   }
+  todoRepository
+    .createByContent(content)
+    .then((newTodo) => {
+      onSuccess(newTodo)
+    })
+    .catch(() => {
+      onError()
+    })
+  //   const todo = {
+  //     id: '12131',
+  //     content,
+  //     date: new Date().toISOString(),
+  //     done: false,
+  //   }
 
-  const todo = {
-    id: '12131',
-    content,
-    date: new Date().toISOString(),
-    done: false,
-  }
-
-  onSuccess(todo)
+  //   onSuccess(todo)
 }
 
 export const todoController = {

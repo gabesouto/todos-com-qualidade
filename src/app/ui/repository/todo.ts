@@ -5,7 +5,8 @@
 //   done: boolean
 // }
 
-import { Todo } from '@ui/schema/todo'
+import { Todo, TodoSchema } from '@ui/schema/todo'
+import { z as schema } from 'zod'
 
 interface TodoRepositoryGetParams {
   page?: number
@@ -47,6 +48,33 @@ async function get({
   }
 }
 
+async function createByContent(content: string): Promise<Todo> {
+  const response = await fetch('/api/todos', {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify({ content }),
+  })
+
+  if (response.ok) {
+    const ServerResponseSchema = schema.object({
+      todo: TodoSchema,
+    })
+    const serverResponse = await response.json()
+    const serverResponseParsed = ServerResponseSchema.safeParse(serverResponse)
+    if (!serverResponseParsed.success) {
+      throw new Error('failed to create TODO')
+    }
+    console.log(serverResponseParsed)
+    const todo = serverResponseParsed.data.todo
+    return todo
+  }
+
+  throw new Error('failed to create todo')
+}
+
 export const todoRepository = {
   get,
+  createByContent,
 }

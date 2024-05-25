@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
     }
     const createdTodo = await todoRepository.CreatedByContent(body.data.content)
 
-    return NextResponse.json({ todo: createdTodo })
+    return NextResponse.json({ todo: createdTodo }, { status: 201 })
   } catch (error) {
     return NextResponse.json(
       {
