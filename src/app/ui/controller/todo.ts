@@ -1,5 +1,6 @@
 import { todoRepository } from '@ui/repository/todo'
 import { Todo } from '@ui/schema/todo'
+
 import { z as schema } from 'zod'
 interface TodoControllerGetParams {
   page?: number
@@ -37,7 +38,6 @@ function create({ content, onError, onSuccess }: todoControllerCreateParams) {
 
   if (!parsedContentParam.success) {
     onError()
-    console.log(parsedContentParam)
 
     return
   }

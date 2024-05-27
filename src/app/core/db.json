@@ -58,7 +58,7 @@
       "id": "3c31f1b4-8d22-436f-9304-18c37273ef4f",
       "date": "2024-05-25T19:42:19.189Z",
       "content": "aaasasas",
-      "done": false
+      "done": true
     },
     {
       "id": "9a39edc1-2402-4edb-9fb2-a5f00a9ff8f8",
@@ -178,8 +178,7 @@
       "id": "5c95b306-00d0-4844-80cf-d650ee9d546c",
       "date": "2024-05-25T22:55:01.650Z",
       "content": "asasasa",
-      "done": false
+      "done": true
     }
-  ],
-  "dogs": []
+  ]
 }

@@ -1,4 +1,5 @@
-import { create, read } from '@core/crud'
+import { create, read, update } from '@core/crud'
+
 interface TodoRepositoryGetParams {
   page?: number
   limit?: number
@@ -43,7 +44,25 @@ async function CreatedByContent(content: string): Promise<Todo> {
   return newTodo
 }
 
+async function toggleDone(id: string): Promise<Todo> {
+  const ALL_TODOS = read()
+  const todo = ALL_TODOS.find((todo) => todo.id === id)
+
+  if (!todo) {
+    throw new Error(`TODO with id ${id} not found`)
+  }
+
+  const currentTudoStatus = todo.done
+
+  const updatedTodo = update(todo.id, {
+    done: !currentTudoStatus,
+  })
+
+  return updatedTodo
+}
+
 export const todoRepository = {
   get,
   CreatedByContent,
+  toggleDone,
 }
