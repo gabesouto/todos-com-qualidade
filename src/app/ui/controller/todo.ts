@@ -50,9 +50,19 @@ function create({ content, onError, onSuccess }: todoControllerCreateParams) {
       onError()
     })
 }
+interface todoControllerToggleParams {
+  id: string
+  updateTodoOnScreen: () => void
+}
+function toggleDone({ id, updateTodoOnScreen }: todoControllerToggleParams) {
+  todoRepository.toggleDone(id).then(() => {
+    updateTodoOnScreen()
+  })
+}
 
 export const todoController = {
   get,
   filterTodosByContent,
   create,
+  toggleDone,
 }
