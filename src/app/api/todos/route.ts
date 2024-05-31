@@ -22,6 +22,7 @@ export async function GET(req: NextRequest) {
 const TodoCreateBodySchema = schema.object({
   content: schema.string(),
 })
+
 export async function POST(req: NextRequest) {
   try {
     const body = TodoCreateBodySchema.safeParse(await req.json())

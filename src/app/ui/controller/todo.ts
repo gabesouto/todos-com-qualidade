@@ -53,11 +53,21 @@ function create({ content, onError, onSuccess }: todoControllerCreateParams) {
 interface todoControllerToggleParams {
   id: string
   updateTodoOnScreen: () => void
+  onError: () => void
 }
-function toggleDone({ id, updateTodoOnScreen }: todoControllerToggleParams) {
-  todoRepository.toggleDone(id).then(() => {
-    updateTodoOnScreen()
-  })
+function toggleDone({
+  id,
+  updateTodoOnScreen,
+  onError,
+}: todoControllerToggleParams) {
+  todoRepository
+    .toggleDone(id)
+    .then(() => {
+      updateTodoOnScreen()
+    })
+    .catch(() => {
+      onError()
+    })
 }
 
 export const todoController = {
