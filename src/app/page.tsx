@@ -164,10 +164,14 @@ function Home() {
                                 return currentTodo.id !== todo.id
                               })
                             })
-                            console.log('clicou')
+                            enqueueSnackbar('TODO succesfully deleted.', {
+                              variant: 'success',
+                            })
                           })
                           .catch(() => {
-                            console.log('failed to delete TODO ')
+                            enqueueSnackbar('Failed to delete TODO.', {
+                              variant: 'error',
+                            })
                           })
                       }}
                     >

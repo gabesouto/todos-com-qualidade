@@ -1,3 +1,10 @@
 {
-  "todos": []
+  "todos": [
+    {
+      "id": "9c232514-df8f-4b56-8f82-1adb50a0c671",
+      "date": "2024-06-05T20:12:25.497Z",
+      "content": "correr",
+      "done": false
+    }
+  ]
 }
