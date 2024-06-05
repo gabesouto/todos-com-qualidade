@@ -1,54 +1,6 @@
 {
   "todos": [
     {
-      "id": "5550a88a-50ca-448f-bbb0-c1480ee81f23",
-      "date": "2023-03-27T00:07:51.718Z",
-      "content": "Primeira TODO",
-      "done": false
-    },
-    {
-      "id": "ae800f92-2993-4278-9b1c-917da9c459b7",
-      "date": "2023-03-27T00:07:51.718Z",
-      "content": "Atualizada!",
-      "done": false
-    },
-    {
-      "id": "33bb0aaf-3e9f-4f25-8e28-22d9a4e4ffb8",
-      "date": "2023-03-27T00:07:51.718Z",
-      "content": "Terceira TODO",
-      "done": false
-    },
-    {
-      "id": "dd47423e-0b7b-4b21-94f3-8f96ebc4c8b9",
-      "date": "2023-03-27T00:07:51.718Z",
-      "content": "Quarta TODO",
-      "done": false
-    },
-    {
-      "id": "ae7f83c9-2bbf-4265-9f8a-8b5e5c7f312e",
-      "date": "2023-03-27T00:07:51.718Z",
-      "content": "Quinta TODO",
-      "done": false
-    },
-    {
-      "id": "b9d6e27d-7c8c-4d6a-8db2-49a6d2b1c8f2",
-      "date": "2023-03-27T00:07:51.718Z",
-      "content": "Sexta TODO",
-      "done": false
-    },
-    {
-      "id": "8db1d4a5-90f4-4530-b02e-43b7614e6c60",
-      "date": "2023-03-27T00:07:51.718Z",
-      "content": "Sétima TODO",
-      "done": false
-    },
-    {
-      "id": "963ddd9c-07e8-4812-ba99-984f41a18ea6",
-      "date": "2024-05-20T23:17:45.998Z",
-      "content": "body",
-      "done": false
-    },
-    {
       "id": "1fd8975e-2c20-499b-97f6-6f4a2908a274",
       "date": "2024-05-25T19:40:49.514Z",
       "content": "aa",
@@ -109,64 +61,10 @@
       "done": false
     },
     {
-      "id": "2052f6cb-e2b3-45b2-b15d-bcc3a6939e31",
-      "date": "2024-05-25T22:33:26.555Z",
-      "content": "asasasa",
-      "done": false
-    },
-    {
-      "id": "0de3f964-c8b2-439c-87f6-308091d9ac1b",
-      "date": "2024-05-25T22:33:51.777Z",
-      "content": "asasas",
-      "done": false
-    },
-    {
-      "id": "3d76715d-65e1-4d62-8363-fbbd2297e4b0",
-      "date": "2024-05-25T22:34:01.250Z",
-      "content": "asas",
-      "done": false
-    },
-    {
       "id": "ba0a061b-85ee-443e-ae8c-ef79fdf21f5a",
       "date": "2024-05-25T22:34:02.341Z",
       "content": "asasas",
       "done": false
-    },
-    {
-      "id": "a3c8a058-636d-4807-94fe-e7cc6e3eda93",
-      "date": "2024-05-25T22:34:03.370Z",
-      "content": "asasa",
-      "done": false
-    },
-    {
-      "id": "f61f671f-3aa6-4c88-9b1a-8927d416c910",
-      "date": "2024-05-25T22:35:17.090Z",
-      "content": "ASASAS",
-      "done": false
-    },
-    {
-      "id": "f358aa55-cf2d-40f2-9ad9-88338619e99c",
-      "date": "2024-05-25T22:36:15.664Z",
-      "content": "ASASAS",
-      "done": false
-    },
-    {
-      "id": "dfe14bf5-64f8-42e0-8db4-0aac4dfc3309",
-      "date": "2024-05-25T22:37:25.512Z",
-      "content": "asas",
-      "done": true
-    },
-    {
-      "id": "c187d319-35b4-4367-8142-7c0c2135b606",
-      "date": "2024-05-25T22:37:27.292Z",
-      "content": "sas",
-      "done": true
-    },
-    {
-      "id": "5c95b306-00d0-4844-80cf-d650ee9d546c",
-      "date": "2024-05-25T22:55:01.650Z",
-      "content": "asasasa",
-      "done": true
     }
   ]
 }
