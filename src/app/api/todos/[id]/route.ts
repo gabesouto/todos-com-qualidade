@@ -3,16 +3,14 @@ import { todoRepository } from '@api/repository/todo'
 import { NextResponse, NextRequest } from 'next/server'
 import { z as schema } from 'zod'
 
-// Defina o schema usando zod
-const QuerySchema = schema.object({
-  id: schema.string().uuid(),
-})
-
 export async function DELETE(
   req: NextRequest,
+
   { params }: { params: { id: string } },
 ) {
-  // Valide os parâmetros
+  const QuerySchema = schema.object({
+    id: schema.string().uuid().min(1),
+  })
   const parsedQuery = QuerySchema.safeParse(params)
   if (!parsedQuery.success) {
     return NextResponse.json(
@@ -20,15 +18,11 @@ export async function DELETE(
       { status: 400 },
     )
   }
-
   try {
-    // Tente deletar pelo ID
     await todoRepository.deleteById(parsedQuery.data.id)
     console.log('bateu')
 
-    return new Response(null, {
-      status: 204,
-    })
+    return new NextResponse(null, { status: 204 })
   } catch (err) {
     if (err instanceof HttpNotFoundError) {
       return NextResponse.json(
@@ -38,7 +32,6 @@ export async function DELETE(
     }
   }
 
-  // Retorne um erro interno do servidor se ocorrer uma exceção não esperada
   return NextResponse.json(
     { error: { message: 'Internal Server Error' } },
     { status: 500 },
