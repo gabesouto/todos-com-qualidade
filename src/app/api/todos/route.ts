@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
   const limit = Number(query.get('limit'))
   console.log(page, limit)
 
-  const output = todoRepository.get({
+  const output = await todoRepository.get({
     page,
     limit,
   })

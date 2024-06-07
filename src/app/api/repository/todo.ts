@@ -1,6 +1,15 @@
 import { HttpNotFoundError } from '@api/infra/errors'
 import { create, read, update, deleteById as dbDeleteById } from '@core/crud'
 
+// ========
+// TODO separar em outro arquivo
+import { createClient } from '@supabase/supabase-js'
+
+const supabaseUrl = process.env.SUPABASE_URL as string
+const supabaseKey = process.env.SUPABASE_SECRET_KEY as string
+const supabase = createClient(supabaseUrl, supabaseKey)
+// =====
+
 interface TodoRepositoryGetParams {
   page?: number
   limit?: number
@@ -18,24 +27,40 @@ interface TodoRepositoryGetOutput {
   pages: number
 }
 
-function get({
+async function get({
   page,
   limit,
-}: TodoRepositoryGetParams = {}): TodoRepositoryGetOutput {
-  const currentPage = page || 1
-  const currentLimit = limit || 10
+}: TodoRepositoryGetParams = {}): Promise<TodoRepositoryGetOutput> {
+  console.log(page, limit)
 
-  const ALL_TODOS = read().reverse()
+  const { data, error, count } = await supabase.from('todos').select('*', {
+    count: 'exact',
+  })
+  if (error) throw new Error('failed to fetch data from supabase')
+  console.log('data', data)
 
-  const startIndex = (currentPage - 1) * currentLimit
-  const endIndex = currentPage * currentLimit
-  const paginatedTodos = ALL_TODOS.slice(startIndex, endIndex)
-  const totalPages = Math.ceil(ALL_TODOS.length / currentLimit)
+  //   const currentPage = page || 1
+  //   const currentLimit = limit || 10
 
+  //   const ALL_TODOS = read().reverse()
+
+  //   const startIndex = (currentPage - 1) * currentLimit
+  //   const endIndex = currentPage * currentLimit
+  //   const paginatedTodos = ALL_TODOS.slice(startIndex, endIndex)
+  //   const totalPages = Math.ceil(ALL_TODOS.length / currentLimit)
+
+  //   return {
+  //     todos: paginatedTodos,
+  //     total: ALL_TODOS.length,
+  //     pages: totalPages,
+  //   }
+
+  const todos = data as Todo[]
+  const total = count || todos.length
   return {
-    todos: paginatedTodos,
-    total: ALL_TODOS.length,
-    pages: totalPages,
+    todos,
+    total,
+    pages: 1,
   }
 }
 
