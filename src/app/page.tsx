@@ -78,6 +78,7 @@ function Home() {
         >
           <input
             type="text"
+            name="add-todo"
             className="text-black"
             placeholder="Correr, Estudar..."
             value={newTodoContent}
