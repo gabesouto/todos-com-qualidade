@@ -3,6 +3,15 @@ export class HttpNotFoundError extends Error {
   constructor(message: string) {
     super()
     this.message = message
+    this.status = 404
+  }
+}
+
+export class HttpBadRequest extends Error {
+  status: number
+  constructor(message: string) {
+    super()
+    this.message = message
     this.status = 400
   }
 }

@@ -1,5 +1,5 @@
 import { HttpNotFoundError } from '@api/infra/errors'
-import { create, read, update, deleteById as dbDeleteById } from '@core/crud'
+
 import { Todo, TodoSchema } from '@api/schema/todo'
 
 // ========
@@ -45,6 +45,7 @@ async function get({
     .select('*', {
       count: 'exact',
     })
+    .order('date', { ascending: false })
     .range(startIndex, endIndex)
   if (error) throw new Error('failed to fetch data from supabase')
   console.log('data', data)
@@ -76,36 +77,69 @@ async function get({
 }
 
 async function CreatedByContent(content: string): Promise<Todo> {
-  const newTodo = create(content)
+  const { data, error } = await supabase
+    .from('todos')
+    .insert([
+      {
+        content,
+      },
+    ])
+    .select()
+    .single()
+  //   const newTodo = create(content)
+  if (error) {
+    throw new Error('failed to create TODO')
+  }
 
-  return newTodo
+  const parsedData = TodoSchema.parse(data)
+
+  return parsedData
+}
+
+async function getTodoById(id: string): Promise<Todo> {
+  const { data, error } = await supabase
+    .from('todos')
+    .select('*')
+    .eq('id', id)
+    .single()
+
+  if (error) throw new Error('Failed to get todo by id')
+
+  const parsedData = TodoSchema.safeParse(data)
+  if (!parsedData.success) throw new Error('Failed to parse TODO created')
+
+  return parsedData.data
 }
 
 async function toggleDone(id: string): Promise<Todo> {
-  const ALL_TODOS = read()
-  const todo = ALL_TODOS.find((todo) => todo.id === id)
+  const todo = await getTodoById(id)
+  const { data, error } = await supabase
+    .from('todos')
+    .update({
+      done: !todo.done,
+    })
+    .eq('id', id)
+    .select()
+    .single()
 
-  if (!todo) {
-    throw new HttpNotFoundError(`TODO with id ${id} not found`)
+  if (error) throw new Error('Failed to get todo by id')
+
+  const parsedData = TodoSchema.safeParse(data)
+  if (!parsedData.success) {
+    throw new Error('Failed to return updated todo')
   }
 
-  const currentTudoStatus = todo.done
-
-  const updatedTodo = update(todo.id, {
-    done: !currentTudoStatus,
-  })
-
-  return updatedTodo
+  return parsedData.data
 }
 
 async function deleteById(id: string) {
-  const ALL_TODOS = read()
-  const todo = ALL_TODOS.find((todo) => todo.id === id)
+  const { error } = await supabase.from('todos').delete().match({
+    id,
+  })
 
-  if (!todo) {
-    throw new HttpNotFoundError(`TODO with id ${id} not found`)
+  if (error) {
+    throw new HttpNotFoundError(`TODO with ID ${id} not found.`)
   }
-  dbDeleteById(id)
 }
 
 export const todoRepository = {
