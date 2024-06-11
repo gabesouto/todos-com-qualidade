@@ -199,7 +199,7 @@ function Home() {
               </tr>
             )}
 
-            {hasMorePages && (
+            {hasMorePages && !hasNoTodos && (
               <tr>
                 <td colSpan={4} align="center" style={{ textAlign: 'center' }}>
                   <button

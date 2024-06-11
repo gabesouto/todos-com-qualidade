@@ -1,15 +1,7 @@
+import { supabase } from '@api/infra/db/supabase'
 import { HttpNotFoundError } from '@api/infra/errors'
 
 import { Todo, TodoSchema } from '@api/schema/todo'
-
-// ========
-// TODO separar em outro arquivo
-import { createClient } from '@supabase/supabase-js'
-
-const supabaseUrl = process.env.SUPABASE_URL as string
-const supabaseKey = process.env.SUPABASE_SECRET_KEY as string
-const supabase = createClient(supabaseUrl, supabaseKey)
-// =====
 
 interface TodoRepositoryGetParams {
   page?: number
@@ -40,7 +32,7 @@ async function get({
   const startIndex = (currentPage - 1) * currentLimit
   const endIndex = currentPage * currentLimit - 1
 
-  const { data, error, count } = await supabase
+  const { data, error, count } = await supabase()
     .from('todos')
     .select('*', {
       count: 'exact',
@@ -77,7 +69,7 @@ async function get({
 }
 
 async function CreatedByContent(content: string): Promise<Todo> {
-  const { data, error } = await supabase
+  const { data, error } = await supabase()
     .from('todos')
     .insert([
       {
@@ -97,7 +89,7 @@ async function CreatedByContent(content: string): Promise<Todo> {
 }
 
 async function getTodoById(id: string): Promise<Todo> {
-  const { data, error } = await supabase
+  const { data, error } = await supabase()
     .from('todos')
     .select('*')
     .eq('id', id)
@@ -113,7 +105,7 @@ async function getTodoById(id: string): Promise<Todo> {
 
 async function toggleDone(id: string): Promise<Todo> {
   const todo = await getTodoById(id)
-  const { data, error } = await supabase
+  const { data, error } = await supabase()
     .from('todos')
     .update({
       done: !todo.done,
@@ -133,7 +125,7 @@ async function toggleDone(id: string): Promise<Todo> {
 }
 
 async function deleteById(id: string) {
-  const { error } = await supabase.from('todos').delete().match({
+  const { error } = await supabase().from('todos').delete().match({
     id,
   })
 
