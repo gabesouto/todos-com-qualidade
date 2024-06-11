@@ -1,5 +1,17 @@
 # TODOS com QUALIDADE 
 
+  <p align="center">
+  <img 
+    src="https://github.com/gabesouto/todos-com-qualidade/blob/main/public/home.png"
+    align="center" 
+    height="auto" 
+    width="auto" 
+  >
+<p/>
+
+
+# Overview
+
 O TODOS com QUALIDADE foi um projeto desenvolvido em conjunto com o curso do Mário Souto, onde o desafio era construir um simples todo list fullstack mas como diz o nome, com qualidade! o foco desse projeto foi a estruturação e qualidade do código tanto na parte da API quanto na parte do frontend.
 
 
