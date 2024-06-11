@@ -52,7 +52,7 @@ O TODOS com QUALIDADE foi um projeto desenvolvido em conjunto com o curso do Má
 
 <h2 id="routes">📍 Documentação da API</h2>
 
-Here's a list the main routes of this API, and what are their expected request bodies.
+Lista de endpoints da aplicação:
 ​
 | route               | description                                          
 |----------------------|-----------------------------------------------------
@@ -61,4 +61,103 @@ Here's a list the main routes of this API, and what are their expected request b
 | <kbd>GET /api/todos?page={page}&limit={limit} </kbd>     | recupera uma quantidade X de TODOS com base no número de páginas e limite passados, veja [request details](#get-todos-query)
 | <kbd>PUT /api/todos/{todoID}/toggle-done</kbd>     | altera o estado de uma TODO, veja [request details](#toggle-done)
 | <kbd>DELETE /api/{todoID}/crops</kbd>     | remove um TODO, veja [request details](#delete-todo)
+
+
+<h3 id="get-todos" >GET /api/todos</h3>
+
+
+**RESPONSE**
+```json
+{
+  "todos":
+[
+    {
+      "id": "043dde67-82b7-48be-ad32-71bb0d2fcdf5",
+      "content": "study math",
+      "date": "2024-06-11T15:27:37.216Z",
+      "done": false
+    },
+    {
+      "id": "7c77fcab-1e34-4886-889c-7b76fb3525fa",
+      "content": "test ruim ",
+      "date": "2024-06-10T21:16:02.280Z",
+      "done": true
+    },
+]
+}
+```
+
+
+<h3 id="get-todos-query">GET /api/todos?page=1&limit=2</h3>
+
+**RESPONSE**
+```json
+{
+  "todos": [
+    {
+      "id": "043dde67-82b7-48be-ad32-71bb0d2fcdf5",
+      "content": "study math",
+      "date": "2024-06-11T15:27:37.216Z",
+      "done": false
+    },
+    {
+      "id": "7c77fcab-1e34-4886-889c-7b76fb3525fa",
+      "content": "test ruim ",
+      "date": "2024-06-10T21:16:02.280Z",
+      "done": true
+    }
+  ],
+}
+```
+
+<h3 id="post-todo">POST /api/todos</h3>
+
+
+**REQUEST**
+```json
+{
+  "content": "study math"
+}
+```
+
+**RESPONSE**
+```json
+{
+  "todo": {
+    "id": "a5e96c84-51c7-40ea-908e-ff6bcfc1b641",
+    "content": "study math",
+    "date": "2024-06-11T15:37:08.595Z",
+    "done": false
+  }
+}
+```
+
+
+<h3 id="toggle-done">PUT /api/{todoId}/toggle-done</h3>
+
+
+**RESPONSE**
+```json
+{
+  "todo": {
+    "id": "a5e96c84-51c7-40ea-908e-ff6bcfc1b641",
+    "content": "study math",
+    "date": "2024-06-11T15:37:08.595Z",
+    "done": true
+  }
+}
+```
+
+<h3 id="delete-todos">DELETE /api/{todoId}</h3>
+```
+
+**RESPONSE**
+```json
+no content
+```
+
+#  How To Reach Me:
+ <a href="mailto:soutogabriel04@gmail.com?"><img src="https://img.shields.io/badge/gmail-%23DD0031.svg?&style=for-the-badge&logo=gmail&logoColor=white"/></a>
+ [![image](https://img.shields.io/badge/Linkedin-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/gabrielsouto-developer/)
+
 
