@@ -15,6 +15,12 @@
 O TODOS com QUALIDADE foi um projeto desenvolvido em conjunto com o curso do Mário Souto, onde o desafio era construir um simples todo list fullstack mas como diz o nome, com qualidade! o foco desse projeto foi a estruturação e qualidade do código tanto na parte da API quanto na parte do frontend.
 
 
+## Deploy
+[TODOS com QUALIDADE](https://todos-com-qualidade.vercel.app/)
+
+Acesse o site no seu navegador clicando no link acima.
+
+
 ## Funcionalidades
 
 - Adicionar, editar, remover e atualizar TODOS
